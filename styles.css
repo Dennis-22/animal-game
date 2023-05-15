@@ -5,15 +5,17 @@
 }
 
 :root{
-    --bg: #1a1a1a;
-    --sec-bg: #0f0f0f7c;
+    --bg: #141414;
+    --sec-bg: rgba(8, 8, 8, 0.438);
     --white: #fff;
     --black: #333;
 
     --app-width: 900px;
     --utils-height: 10vh;
-    --animal-height:70px;
-    --animal-width:70px;
+
+    --animal-height:60px;
+    --animal-width:60px;
+    --animal-img-size:35px
 }
 
 body{
@@ -40,14 +42,14 @@ body{
     width: min(95%, var(--app-width));
     height: 100vh;
     margin: auto;
-    border: 1px solid red;
 }
 
 .UI-view{
-    margin-top: 25vh;
+    margin-top: 15vh;
     padding: 50px 10px;
     text-align: center;
-    background-color: var(--sec-bg, red);
+    background-color: var(--sec-bg);
+    border-radius: 10px;
 }
 
 .UI-title{
@@ -56,12 +58,14 @@ body{
 
 .UI-text{
     margin: 20px 0;
+    font-weight: 300;
 }
 
 /* Playground Styles */
 .playground{
     height: 100%;
-    background-color: red;
+    background-color: var(--sec-bg);
+    border: 1px solid rgb(143, 143, 143);
 }
 
 .utils{
@@ -70,7 +74,12 @@ body{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: rgba(143, 143, 143, 0.233);
+    border: 1px solid rgb(143, 143, 143);
 }
+
+.time{margin-bottom: 5px;}
+#time,#score{font-weight: 700;}
 
 .animal-select{
     width: 40px;
@@ -79,9 +88,9 @@ body{
 
 .platform{
     position: relative;
-    background-color: yellow;
     height: calc(100% - var(--utils-height));
     width: 100%;
+    background-color: var(--sec-bg);
 }
 
 .animal{

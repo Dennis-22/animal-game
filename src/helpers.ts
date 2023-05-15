@@ -12,6 +12,12 @@ export function createIntroAndEndUI(titleText:string, subText:string, btnText:st
   
     appendToBody(UIView, [title, text, button])
     appendToBody(getElementById('app') as HTMLElement, [UIView])
+
+    // setInterval(()=>{
+    //     console.log('runn')
+    //     let animal = new Animal(()=>console.log('press'))
+    //     animal.moveAround()
+    // },1000)
 }
 
 // creates the game ui itslef
@@ -51,4 +57,9 @@ export function generateRandomColor(){
     let colors = [red, yellow, blue]
 
     return colors[Math.floor(Math.random() * colors.length)]
+}
+
+export function generateRandomNum(min:number, max:number){
+    const delta = max - min;
+    return (direction = 1) => (min + delta * Math.random()) * direction;
 }

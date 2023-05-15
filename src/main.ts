@@ -5,12 +5,15 @@ import { Mode } from "./types"
 
 const app = getElementById('app') as HTMLElement
 
-let timeCount = 5
-let chancesCount = 3
+let timeCount = 0
+let chancesCount = 0
 let scoreCount = 0
 let animalSelect = generateRandomAnimal()
+let gameLoop:any = null
 
-updateUI("PLAY")
+updateUI("INTRO")
+
+// TODO: make game loop
 
 // functions
 
@@ -27,27 +30,29 @@ function updateUI(mode:Mode){
 
   if(mode === "PLAY"){
       // set utils
-    timeCount = 50
-    chancesCount = 3
-    scoreCount = 0
-    animalSelect = generateRandomAnimal()
-    createPlaygroundUI(timeCount, chancesCount, scoreCount, animalSelect)
+      timeCount = 10
+      chancesCount = 3
+      scoreCount = 0
+      animalSelect = generateRandomAnimal()
+      createPlaygroundUI(timeCount, chancesCount, scoreCount, animalSelect)
 
-      // setInterval(()=>{
+      gameLoop = setInterval(()=>{
         const bird = new Animal(animalPress)
-        bird.addToPlayground()
-        // }, 1000)
+        bird.moveToTop()
+      }, 1000)
       countDownTime()
   }
 
   if(mode === "END"){
+    clearInterval(gameLoop)
     createIntroAndEndUI(
       (timeCount <= 0 ? "Time is up" : "Game Over"), 
       `You scored ${scoreCount}pts`, 
       "Play again", 
-      ()=>updateUI("INTRO")
+      ()=>updateUI("PLAY")
     )
   }
+
 }
 
 function countDownTime(){
@@ -66,12 +71,16 @@ function countDownTime(){
   },1000)
 }
 
-function animalPress(animalId:string){
+function animalPress(animal:HTMLElement){
   //get the animal to select id and march to what the user pressed
 
-  if(animalId === animalSelect.name){
-    // increase score
-      placeText(getElementById('score') as HTMLElement, scoreCount++)
+  if(animal.id === animalSelect.name){
+    // increase score and time and remove the animal
+      scoreCount++
+      timeCount = timeCount+2
+      placeText(getElementById('score') as HTMLElement, scoreCount)
+      placeText(getElementById('time') as HTMLElement, timeCount)
+      animal.remove()
   }else{
     // decrease user chance by one
     chancesCount--
