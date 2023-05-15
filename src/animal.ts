@@ -25,37 +25,44 @@ function getPlatformWidth(){
 }
 
 export default class Animal{
-    randomAnimal: {name:string, img:string}
-    animal:HTMLElement
+    animal: {name:string, img:string}
+    animalDiv:HTMLElement
     animalImg:HTMLImageElement
     color:string
     left:number
-    animalPress : (animal:HTMLElement)=>void
 
-    constructor(animalPress:(animal:HTMLElement)=>void){
-        this.randomAnimal = generateRandomAnimal()
-        this.animal = createParent('div', ['animal'], this.randomAnimal.name)
-        this.animal.setAttribute("animal", "")
-        this.animalImg = createImage(this.randomAnimal.img, ['animal-img'], this.randomAnimal.name)
+    constructor(){
+        this.animal = generateRandomAnimal()
+        this.animalDiv = createParent('div', ['animal'], this.animal.name)
+        this.animalDiv.setAttribute("animal", "")
+        this.animalImg = createImage(this.animal.img, ['animal-img'], this.animal.name)
         this.color = generateRandomColor()
         this.left = Math.floor(Math.random()* (getPlatformWidth() - 50)) //use the current platformWidth so animal does not go offscreen
-        this.animal.style.backgroundColor = this.color
-        this.animal.style.left = this.left + 'px'
-        this.animalPress = animalPress
+        this.animalDiv.style.backgroundColor = this.color
+        this.animalDiv.style.left = this.left + 'px'
 
-        this.animal.addEventListener('click', ()=>this.animalPress(this.animal))
-        appendToBody(this.animal, [this.animalImg])
+        appendToBody(this.animalDiv, [this.animalImg])
+    }
+
+    get id(){
+        return this.animal.name
+    }
+
+    addEventListener(eventListener:()=>void){
+        this.animalDiv.addEventListener('click', eventListener)
     }
 
     moveToTop(){
-        appendToBody(document.getElementById('platform') as HTMLElement, [this.animal])
-        let speed = Math.random() * 5 + 10
+        console.log('move to top')
+        appendToBody(document.getElementById('platform') as HTMLElement, [this.animalDiv])
+        let speed = Math.random() * 5 + 5
     
-        gsap.fromTo(this.animal, {y:0, }, {y:-1000, duration:speed, ease:"power1.out"})
+        gsap.to(this.animalDiv, {y:-1000, duration:speed, ease:"power1.out"})
+
 
         // remove animal after said time
         setInterval(()=>{
-            this.animal.remove()
+            this.removeFromDom()
         }, Math.floor(speed) * 1000) // animal would by then be offscreen
     }
 
@@ -96,5 +103,9 @@ export default class Animal{
     //     moveX(this.animal, 1)
     //     moveY(this.animal, -1)
     // }
+
+    removeFromDom(){
+        this.animalDiv.remove()
+    }
 }
 

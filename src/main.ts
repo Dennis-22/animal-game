@@ -29,18 +29,19 @@ function updateUI(mode:Mode){
   }
 
   if(mode === "PLAY"){
-      // set utils
-      timeCount = 10
-      chancesCount = 3
-      scoreCount = 0
-      animalSelect = generateRandomAnimal()
-      createPlaygroundUI(timeCount, chancesCount, scoreCount, animalSelect)
+    // set utils
+    timeCount = 10
+    chancesCount = 3
+    scoreCount = 0
+    animalSelect = generateRandomAnimal()
+    createPlaygroundUI(timeCount, chancesCount, scoreCount, animalSelect)
 
-      gameLoop = setInterval(()=>{
-        const bird = new Animal(animalPress)
-        bird.moveToTop()
-      }, 1000)
-      countDownTime()
+    gameLoop = setInterval(()=>{
+      const animal = new Animal()
+      animal.addEventListener(()=>animalPress(animal))
+      animal.moveToTop()
+    },800)
+    countDownTime()
   }
 
   if(mode === "END"){
@@ -71,7 +72,8 @@ function countDownTime(){
   },1000)
 }
 
-function animalPress(animal:HTMLElement){
+
+function animalPress(animal:Animal){
   //get the animal to select id and march to what the user pressed
 
   if(animal.id === animalSelect.name){
@@ -80,7 +82,7 @@ function animalPress(animal:HTMLElement){
       timeCount = timeCount+2
       placeText(getElementById('score') as HTMLElement, scoreCount)
       placeText(getElementById('time') as HTMLElement, timeCount)
-      animal.remove()
+      animal.removeFromDom()
   }else{
     // decrease user chance by one
     chancesCount--
