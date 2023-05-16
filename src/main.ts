@@ -9,9 +9,12 @@ let timeCount = 0
 let chancesCount = 0
 let scoreCount = 0
 let animalSelect = generateRandomAnimal()
-let gameLoop:any = null
 
-updateUI("INTRO")
+let lastRenderedTime = 0
+let delta:number = 0
+// let gameLoop:any = null
+
+updateUI("PLAY")
 
 // TODO: make game loop
 
@@ -36,16 +39,20 @@ function updateUI(mode:Mode){
     animalSelect = generateRandomAnimal()
     createPlaygroundUI(timeCount, chancesCount, scoreCount, animalSelect)
 
-    gameLoop = setInterval(()=>{
-      const animal = new Animal()
-      animal.addEventListener(()=>animalPress(animal))
-      animal.moveToTop()
-    },800)
+    //@ts-ignore
+    gameLoop()
     countDownTime()
+    
+    // gameLoop = setInterval(()=>{
+    //   const animal = new Animal()
+    //   animal.addEventListener(()=>animalPress(animal))
+    //   animal.moveToTop()
+    // },800)
+    // countDownTime()
   }
 
   if(mode === "END"){
-    clearInterval(gameLoop)
+    // clearInterval(gameLoop)
     createIntroAndEndUI(
       (timeCount <= 0 ? "Time is up" : "Game Over"), 
       `You scored ${scoreCount}pts`, 
@@ -54,6 +61,36 @@ function updateUI(mode:Mode){
     )
   }
 
+}
+
+function gameLoop(time:number){
+  if(lastRenderedTime === 0){
+    console.log('got here 1')
+    lastRenderedTime = time
+    requestAnimationFrame(gameLoop)
+    return
+  }
+
+  let newDelta = Math.floor(time - lastRenderedTime)
+  lastRenderedTime = time
+
+  if(Number.isNaN(delta)){
+    delta = newDelta
+    requestAnimationFrame(gameLoop)
+    return
+  }
+
+  if(delta > 1000){
+    const animal = new Animal()
+    animal.addEventListener(()=>animalPress(animal))
+    animal.moveToTop()
+    delta = 0
+    requestAnimationFrame(gameLoop)
+    return
+  }
+
+  delta = delta + newDelta
+  requestAnimationFrame(gameLoop)
 }
 
 function countDownTime(){

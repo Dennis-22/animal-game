@@ -53,7 +53,6 @@ export default class Animal{
     }
 
     moveToTop(){
-        console.log('move to top')
         appendToBody(document.getElementById('platform') as HTMLElement, [this.animalDiv])
         let speed = Math.random() * 5 + 5
     
