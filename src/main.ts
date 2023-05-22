@@ -1,6 +1,7 @@
 import { clearParent, getElementById, placeText } from "./domHelpers"
-import { createIntroAndEndUI, createPlaygroundUI } from "./helpers"
+import { createIntroUI, createPlaygroundUI, createGameEndUI } from "./helpers"
 import Animal, {generateRandomAnimal } from "./animal"
+import { utils } from "./defaults"
 import { Mode } from "./types"
 
 const app = getElementById('app') as HTMLElement
@@ -12,11 +13,9 @@ let animalSelect = generateRandomAnimal()
 
 let lastRenderedTime = 0
 let delta:number = 0
-// let gameLoop:any = null
 
-updateUI("PLAY")
+updateUI("INTRO")
 
-// TODO: make game loop
 
 // functions
 
@@ -24,40 +23,28 @@ function updateUI(mode:Mode){
   clearParent(app) //remove the current app content
 
   if(mode === "INTRO"){
-    createIntroAndEndUI(
-      "Animal Farm", 
-      "Punch animals, hav fun", "Start", 
-      ()=>updateUI("PLAY")
-    )
+    createIntroUI(()=>updateUI("PLAY"))
   }
 
   if(mode === "PLAY"){
     // set utils
-    timeCount = 10
-    chancesCount = 3
-    scoreCount = 0
+    timeCount = utils.timeCount
+    chancesCount = utils.chancesCount
+    scoreCount = utils.scoreCount
     animalSelect = generateRandomAnimal()
     createPlaygroundUI(timeCount, chancesCount, scoreCount, animalSelect)
 
     //@ts-ignore
     gameLoop()
     countDownTime()
-    
-    // gameLoop = setInterval(()=>{
-    //   const animal = new Animal()
-    //   animal.addEventListener(()=>animalPress(animal))
-    //   animal.moveToTop()
-    // },800)
-    // countDownTime()
   }
 
   if(mode === "END"){
-    // clearInterval(gameLoop)
-    createIntroAndEndUI(
-      (timeCount <= 0 ? "Time is up" : "Game Over"), 
-      `You scored ${scoreCount}pts`, 
-      "Play again", 
-      ()=>updateUI("PLAY")
+    createGameEndUI(
+      (timeCount <= 0 ? "Time is up" : "Game Over"),
+      `You scored ${scoreCount}pts`,
+      ()=>updateUI("PLAY"),
+      ()=>updateUI("INTRO")
     )
   }
 

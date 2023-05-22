@@ -9,13 +9,17 @@
     --sec-bg: rgba(8, 8, 8, 0.438);
     --white: #fff;
     --black: #333;
+    --text-faint: #eeeeeeab;
 
     --app-width: 900px;
     --utils-height: 10vh;
 
     --animal-height:60px;
     --animal-width:60px;
-    --animal-img-size:35px
+    --animal-img-size:35px;
+
+    --font-bold:700;
+    --font-medium:600;
 }
 
 body{
@@ -25,12 +29,14 @@ body{
 
 /* general styles */
 .btn{
+    display: block;
     padding: 0.6rem 1.2rem;
     font-size: 1rem;
     font-weight: 500;
     font-family: inherit;
     color: var(--black);
     background-color: var(--white);
+    width: min(95%, 250px);
     cursor: pointer;
     border-radius: 2px;
     border: 1px solid transparent;
@@ -44,22 +50,87 @@ body{
     margin: auto;
 }
 
-.UI-view{
-    margin-top: 15vh;
+/* INTRO ****************************************************/
+.intro{
+    margin-top: 5vh;
+    margin-bottom: 50px;
     padding: 50px 10px;
-    text-align: center;
     background-color: var(--sec-bg);
+    border-radius: 10px;    
+}
+
+.intro-title{
+    font-size: 2.7rem;
+    text-align: center;
+    font-weight: var(--font-bold);
+}
+
+.intro-text{
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 1.3rem;
+    color: var(--text-faint);
+}
+
+.instructions{
+    margin: 4.5rem 0;
+}
+
+.ins-title{
+    font-size: 1.2rem;
+    font-weight: var(--font-medium);
+    text-decoration: underline;
+}
+
+.ins-lists{
+    margin-top: 1rem;
+    padding: 0 20px;
+}
+
+.ins-lists > li{
+    margin: 10px 0;
+    line-height: 1.5;
+    color: var(--text-faint);
+}
+
+.intro-btn{
+    margin: 0 auto;
+}
+
+/*  ****************************************************/
+
+
+/* END **************************************************/
+.game-end{
+    margin-top: 5vh;
+    background-color: var(--sec-bg);
+    padding: 50px 10px;
     border-radius: 10px;
 }
 
-.UI-title{
-    font-size: 3rem;
+.g-e-title{
+    font-size: 2.7rem;
+    text-align: center;
+    font-weight: var(--font-bold);
 }
 
-.UI-text{
-    margin: 20px 0;
-    font-weight: 300;
+.g-e-text{
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 1.3rem;
+    color: var(--text-faint);
 }
+
+.g-e-btns{
+    margin: 4.5rem 0;
+}
+
+.g-e-btns > button{
+    margin: 15px auto;
+}
+
+/* **************************************************/
+
 
 /* Playground Styles */
 .playground{
