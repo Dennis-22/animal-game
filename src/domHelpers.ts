@@ -25,7 +25,7 @@ export function createElement(element:string, content:string | number, className
     return domElem
 }
 
-export function createImage(source:string, classNames:string[], id?:string){
+export function createImage(source:string, classNames:string[], id?:string):HTMLImageElement{
     let imgElem = document.createElement('img')
     imgElem.setAttribute('src', source)
     addClassNamesToElement(imgElem, classNames)

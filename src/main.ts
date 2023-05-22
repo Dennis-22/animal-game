@@ -1,5 +1,5 @@
 import { clearParent, getElementById, placeText } from "./domHelpers"
-import { createIntroUI, createPlaygroundUI, createGameEndUI } from "./helpers"
+import { createIntroUI, createPlaygroundUI, createGameEndUI, createReadyUI } from "./helpers"
 import Animal, {generateRandomAnimal } from "./animal"
 import { utils } from "./defaults"
 import { Mode } from "./types"
@@ -23,7 +23,13 @@ function updateUI(mode:Mode){
   clearParent(app) //remove the current app content
 
   if(mode === "INTRO"){
-    createIntroUI(()=>updateUI("PLAY"))
+    createIntroUI(()=>updateUI("READY"))
+  }
+
+  if(mode === "READY"){
+    // randomly generate an animal for user to select
+    animalSelect = generateRandomAnimal()
+    createReadyUI(animalSelect, ()=>updateUI('PLAY'))
   }
 
   if(mode === "PLAY"){
@@ -31,7 +37,6 @@ function updateUI(mode:Mode){
     timeCount = utils.timeCount
     chancesCount = utils.chancesCount
     scoreCount = utils.scoreCount
-    animalSelect = generateRandomAnimal()
     createPlaygroundUI(timeCount, chancesCount, scoreCount, animalSelect)
 
     //@ts-ignore
@@ -43,7 +48,7 @@ function updateUI(mode:Mode){
     createGameEndUI(
       (timeCount <= 0 ? "Time is up" : "Game Over"),
       `You scored ${scoreCount}pts`,
-      ()=>updateUI("PLAY"),
+      ()=>updateUI("READY"),
       ()=>updateUI("INTRO")
     )
   }
@@ -52,7 +57,6 @@ function updateUI(mode:Mode){
 
 function gameLoop(time:number){
   if(lastRenderedTime === 0){
-    console.log('got here 1')
     lastRenderedTime = time
     requestAnimationFrame(gameLoop)
     return
@@ -83,10 +87,12 @@ function gameLoop(time:number){
 function countDownTime(){
   let timer = getElementById('time') as HTMLElement
   let countdownTimer = setInterval(()=>{
-      if(timeCount < 0){
-        //the game has end
+      if(timeCount < 0){//the game has end
+
+        // remove all animals from the dom        
+        document.querySelectorAll('.animal').forEach(animal => animal.remove())
+
         clearInterval(countdownTimer)
-        // endGame("You run out of time")
         updateUI("END")
       }
       else{

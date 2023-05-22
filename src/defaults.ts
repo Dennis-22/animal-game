@@ -1,7 +1,6 @@
-const utils = {
-    timeCount: 10,
-    chancesCount: 3,
-    scoreCount: 0,
+const app = {
+    name:"Animal Farm",
+    desc:"Have fun punching animals"
 }
 
 const introTexts = [
@@ -12,7 +11,14 @@ const introTexts = [
     "Your score and time left is displayed at the top left conner, chances left at the top middle while the target animal is displayed at the top right"
 ]
 
+const utils = {
+    timeCount: 10,
+    chancesCount: 3,
+    scoreCount: 0,
+}
+
 export {
+    app,
     utils,
     introTexts
 }

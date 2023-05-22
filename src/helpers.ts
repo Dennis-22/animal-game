@@ -1,13 +1,14 @@
-import { appendToBody, createParent, createElement, getElementById, createImage } from "./domHelpers"
-import { AnimalSelect } from "./types"
-import { introTexts } from "./defaults"
+import { appendToBody, createParent, createElement, getElementById, createImage, placeText } from "./domHelpers"
+import { AnimalSelect, functionVoid } from "./types"
+import { app, introTexts } from "./defaults"
 
-export function createIntroUI(startBtnFn:()=>void){
+// UI for introduction
+export function createIntroUI(startBtnFn:functionVoid){
     const intro = createParent('div', ['intro'])
-    const introTitle = createElement('p', 'Animal Farm', ['intro-title'])
-    const introText = createElement('p', 'Have fun punching animals', ['intro-text'])
+    const introTitle = createElement('p', app.name, ['intro-title'])
+    const introText = createElement('p', app.desc, ['intro-text'])
     const instructions = createParent('div', ['instructions'])
-    const instructionTitle = createElement('p', "Instruction", ['ins-title'])
+    const instructionTitle = createElement('p', "Instructions", ['ins-title'])
     const instructionsLists = createParent('ul', ['ins-lists'])
     const button = createElement('button', 'Start', ['btn', 'intro-btn'])
 
@@ -21,6 +22,32 @@ export function createIntroUI(startBtnFn:()=>void){
     appendToBody(instructions, [instructionTitle, instructionsLists])
     appendToBody(intro, [introTitle, introText, instructions, button])
     appendToBody(getElementById('app') as HTMLElement, [intro])
+}
+
+// UI for ready
+export function createReadyUI(animalSelect:AnimalSelect, gotoPlay:functionVoid){
+    const ready = createParent('div', ['ready'])
+    const readyTitle = createElement('p', 'Ready', ['ready-title'])
+    const readyCount = createElement('p', '3', ['ready-count'], 'ready-count')
+    const readyText = createElement('p', `Select all ${animalSelect.name}s`, ['ready-text'])
+    const readyAnimal = createImage(animalSelect.img, ['ready-animal'])
+
+    appendToBody(ready, [readyTitle, readyCount, readyText, readyAnimal])
+    appendToBody(getElementById('app') as HTMLElement, [ready]);
+
+
+    // start the count down
+    (()=>{
+        let count = 3
+        let interval = setInterval(()=>{
+            if(count === 0){
+                clearInterval(interval)
+                return gotoPlay()
+            }
+            count--
+            placeText(readyCount, count)
+        },1000)
+    })();
 }
 
 // creates the game ui itslef
@@ -51,8 +78,9 @@ export function createPlaygroundUI(timeCount:number, chancesCount:number, scoreC
     appendToBody(getElementById('app') as HTMLElement, [playground])
 }
 
-export function createGameEndUI(titleText:string, subText:string, 
-    playAginFn:()=>void, goToIntroFn:()=>void){
+// UI for game end
+export function createGameEndUI(titleText:string, subText:string, playAginFn:functionVoid, goToIntroFn:functionVoid){
+
     const gameEnd = createParent('div', ["game-end"])
     const title = createElement('p', titleText, ["g-e-title"])
     const text = createElement('p', subText, ["g-e-text"])
@@ -76,9 +104,4 @@ export function generateRandomColor(){
     let colors = [red, yellow, blue]
 
     return colors[Math.floor(Math.random() * colors.length)]
-}
-
-export function generateRandomNum(min:number, max:number){
-    const delta = max - min;
-    return (direction = 1) => (min + delta * Math.random()) * direction;
 }

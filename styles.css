@@ -100,39 +100,45 @@ body{
 /*  ****************************************************/
 
 
-/* END **************************************************/
-.game-end{
+/* READY ****************************************************/
+.ready{
     margin-top: 5vh;
-    background-color: var(--sec-bg);
+    margin-bottom: 50px;
     padding: 50px 10px;
+    background-color: var(--sec-bg);
     border-radius: 10px;
-}
-
-.g-e-title{
-    font-size: 2.7rem;
     text-align: center;
-    font-weight: var(--font-bold);
 }
 
-.g-e-text{
+.ready > p{
+    margin: 20px 0;
+}
+
+.ready-title{
     text-align: center;
     margin-top: 1rem;
     font-size: 1.3rem;
     color: var(--text-faint);
 }
 
-.g-e-btns{
-    margin: 4.5rem 0;
+.ready-count{
+    font-size: 2.7rem;
+    font-weight: var(--font-bold);
 }
 
-.g-e-btns > button{
-    margin: 15px auto;
+.ready-text{
+    color: var(--text-faint);
 }
 
-/* **************************************************/
+.ready-animal{
+    width: var(--animal-width);
+    height: var(--animal-height);
+}
+
+/* ********************************************************** */
 
 
-/* Playground Styles */
+/* PLAYGROUND *************************************************/
 .playground{
     height: 100%;
     background-color: var(--sec-bg);
@@ -184,4 +190,37 @@ body{
     user-select: none;
 }
 
-/* ---------------- */
+/* *****************************************************/
+
+
+/* END **************************************************/
+.game-end{
+    margin-top: 5vh;
+    background-color: var(--sec-bg);
+    padding: 50px 10px;
+    border-radius: 10px;
+}
+
+.g-e-title{
+    font-size: 2.7rem;
+    text-align: center;
+    font-weight: var(--font-bold);
+}
+
+.g-e-text{
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 1.3rem;
+    color: var(--text-faint);
+}
+
+.g-e-btns{
+    margin: 4.5rem 0;
+}
+
+.g-e-btns > button{
+    margin: 15px auto;
+}
+
+/* **************************************************/
+
