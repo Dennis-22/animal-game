@@ -1,5 +1,5 @@
 const app = {
-    name:"Animal Farm",
+    name:"Animal Game",
     desc:"Have fun punching animals"
 }
 
