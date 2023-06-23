@@ -25,6 +25,7 @@
 body{
     background-color: var(--bg);
     color: var(--white);
+    font-family: 'Overpass', sans-serif;
 }
 
 /* general styles */
